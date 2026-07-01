@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_TIMEOUT = 10
 
-VPN_PROTOCOLS = ("openvpn", "wireguard")
+VPN_PROTOCOLS = ("wireguard", "openvpn")
 
 
 def _get(url: str) -> dict | None:
