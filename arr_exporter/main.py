@@ -5,7 +5,7 @@ import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-from arr_exporter.collectors import radarr, sonarr, tautulli
+from arr_exporter.collectors import gluetun, qbittorrent, radarr, sonarr, tautulli
 from arr_exporter.config import Settings, load_settings
 from arr_exporter.influx import InfluxWriter
 
@@ -18,6 +18,8 @@ COLLECTORS = {
     "tautulli": tautulli.collect,
     "sonarr": sonarr.collect,
     "radarr": radarr.collect,
+    "qbittorrent": qbittorrent.collect,
+    "gluetun": gluetun.collect,
 }
 
 
