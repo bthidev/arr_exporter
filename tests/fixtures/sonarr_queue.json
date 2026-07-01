@@ -1,0 +1,9 @@
+{
+  "page": 1,
+  "pageSize": 250,
+  "totalRecords": 2,
+  "records": [
+    {"id": 1, "status": "downloading"},
+    {"id": 2, "status": "warning"}
+  ]
+}
