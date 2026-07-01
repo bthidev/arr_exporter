@@ -22,16 +22,25 @@ bucket.
 2. Make sure the container can reach Tautulli/Sonarr/Radarr/InfluxDB — either
    put it on the same Docker network as those services, or point the
    `*_URL` variables at an internal hostname (e.g. via Nginx Proxy Manager).
-3. Deploy the stack:
+3. Deploy the stack. By default `docker-compose.yml` pulls the image built by
+   CI (`ghcr.io/bthidev/arr_exporter:latest`); uncomment `build: .` instead if
+   you want to build it locally:
 
    ```bash
-   docker compose up -d --build
+   docker compose up -d
    ```
 
    In Portainer: Stacks → Add stack → paste `docker-compose.yml` → set the
    environment variables (or upload `.env`) → Deploy.
 
 4. Check health: `curl http://<host>:8000/health` should return `200`.
+
+The image is built from a multi-stage `Dockerfile` (`python:3.12-alpine`
+builder + runtime, no compiler in the final layer) and published by
+[`.github/workflows/docker-publish.yml`](.github/workflows/docker-publish.yml)
+to GitHub Container Registry on every push to `main` and on version tags
+(`v*`). Pull requests only build the image to validate the Dockerfile, they
+don't push.
 
 ### Option B — LXC / systemd
 

@@ -3,8 +3,8 @@
 # sure the *_URL variables in .env resolve via an internal hostname (e.g. NPM).
 services:
   arr_exporter:
-    build: .
-    image: arr_exporter:latest
+    image: ghcr.io/bthidev/arr_exporter:latest
+    # build: .   # uncomment to build locally instead of pulling the published image
     container_name: arr_exporter
     env_file: .env
     restart: unless-stopped
