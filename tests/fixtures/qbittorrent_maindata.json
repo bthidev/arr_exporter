@@ -1,0 +1,86 @@
+{
+  "rid": 1,
+  "full_update": true,
+  "server_state": {
+    "connection_status": "connected",
+    "dl_info_speed": 1048576,
+    "dl_info_data": 10737418240,
+    "up_info_speed": 524288,
+    "up_info_data": 5368709120,
+    "free_space_on_disk": 500000000000,
+    "global_ratio": "1.25",
+    "dht_nodes": 42
+  },
+  "torrents": {
+    "hash1": {
+      "name": "Ubuntu ISO",
+      "state": "downloading",
+      "category": "linux",
+      "progress": 0.5,
+      "num_seeds": 10,
+      "num_leechs": 2,
+      "eta": 3600,
+      "last_activity": 1750000000
+    },
+    "hash2": {
+      "name": "Seeding Movie",
+      "state": "uploading",
+      "category": "movies",
+      "progress": 1.0,
+      "num_seeds": 0,
+      "num_leechs": 3,
+      "eta": 8640000,
+      "last_activity": 1750000000
+    },
+    "hash3": {
+      "name": "Old Stalled Download",
+      "state": "stalledDL",
+      "category": "tv",
+      "progress": 0.3,
+      "num_seeds": 1,
+      "num_leechs": 0,
+      "eta": 8640000,
+      "last_activity": 1600000000
+    },
+    "hash4": {
+      "name": "Stalled Upload",
+      "state": "stalledUP",
+      "category": "movies",
+      "progress": 1.0,
+      "num_seeds": 0,
+      "num_leechs": 0,
+      "eta": 8640000,
+      "last_activity": 1750000000
+    },
+    "hash5": {
+      "name": "Paused Item",
+      "state": "pausedDL",
+      "category": "",
+      "progress": 0.1,
+      "num_seeds": 0,
+      "num_leechs": 0,
+      "eta": 8640000,
+      "last_activity": 1750000000
+    },
+    "hash6": {
+      "name": "Broken Torrent",
+      "state": "error",
+      "category": "movies",
+      "progress": 0.0,
+      "num_seeds": 0,
+      "num_leechs": 0,
+      "eta": -1,
+      "last_activity": 1750000000
+    },
+    "hash7": {
+      "name": "Checking File",
+      "state": "checkingDL",
+      "category": "tv",
+      "progress": 0.6,
+      "num_seeds": 0,
+      "num_leechs": 0,
+      "eta": -1,
+      "last_activity": 1750000000
+    }
+  }
+}

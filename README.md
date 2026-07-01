@@ -1,8 +1,9 @@
 # arr_exporter
 
-Small Python exporter that polls **Tautulli**, **Sonarr** and **Radarr** on a
-fixed interval and writes the collected metrics to **InfluxDB v2** using the
-official client (Line Protocol over the v2 write API).
+Small Python exporter that polls **Tautulli**, **Sonarr**, **Radarr**,
+**qBittorrent** and **gluetun** (VPN) on a fixed interval and writes the
+collected metrics to **InfluxDB v2** using the official client (Line Protocol
+over the v2 write API).
 
 No Prometheus, no scraping — this is a push-based exporter: it fetches from
 each `*arr` API, builds `Point`s, and writes them straight to your InfluxDB
@@ -12,6 +13,8 @@ bucket.
 
 - An existing InfluxDB v2 instance (org + bucket + API token already created)
 - Tautulli, Sonarr and Radarr reachable over HTTP with their API keys
+- qBittorrent reachable over HTTP with its WebUI credentials
+- gluetun reachable over HTTP with its control server enabled
 - Python 3.12+ (for the systemd/LXC route) or Docker (for the Portainer route)
 
 ## Installation
@@ -96,6 +99,11 @@ All configuration is via environment variables (see `.env.example`):
 | `SONARR_API_KEY`          | Sonarr API key                                | —       |
 | `RADARR_URL`              | Radarr base URL                               | —       |
 | `RADARR_API_KEY`          | Radarr API key                                | —       |
+| `QBITTORRENT_URL`         | qBittorrent WebUI base URL                    | —       |
+| `QBITTORRENT_USERNAME`    | qBittorrent WebUI username                    | —       |
+| `QBITTORRENT_PASSWORD`    | qBittorrent WebUI password                    | —       |
+| `GLUETUN_CONTROL_URL`     | gluetun control server base URL               | —       |
+| `HOME_WAN_IP`             | Home WAN IP, optional, enables VPN leak detection | —   |
 | `POLL_INTERVAL_SECONDS`   | Seconds between collection cycles             | `60`    |
 | `LOG_LEVEL`               | Python logging level                          | `INFO`  |
 | `HEALTH_PORT`             | Port for the `/health` HTTP endpoint          | `8000`  |
@@ -118,6 +126,10 @@ the other collectors and the next poll cycle are unaffected.
 | `radarr_movies`       | `service`                           | `movie_count`, `monitored`, `missing`                                    |
 | `radarr_diskspace`    | `service`, `path`                   | `free_bytes`, `total_bytes`                                             |
 | `radarr_calendar`     | `service`                           | `upcoming_count` (next 7 days)                                           |
+| `qbittorrent_transfer`| `service`, `connection_status`      | `dl_speed`, `up_speed`, `dl_data`, `up_data`, `free_space_on_disk`, `global_ratio`, `dht_nodes` |
+| `qbittorrent_torrents`| `service`                           | `total`, `downloading`, `seeding`, `stalled_dl`, `stalled_up`, `paused`, `error`, `checking` |
+| `qbittorrent_torrent_detail` | `service`, `name`, `state`, `category` | `progress`, `num_seeds`, `num_leechs`, `eta` (one point per torrent in `error`, `missingFiles`, or `stalledDL` for more than 10 minutes — not written for healthy torrents to keep cardinality low) |
+| `gluetun_vpn`         | `service`, `protocol`               | `tunnel_up` (1/0), `public_ip` (string field, not a tag), `leak_detected` (bool, only present when `HOME_WAN_IP` is set) |
 
 ## Verifying data in InfluxDB
 
@@ -126,8 +138,8 @@ Flux query to check that points are arriving (adjust bucket name):
 ```flux
 from(bucket: "media")
   |> range(start: -15m)
-  |> filter(fn: (r) => r["_measurement"] =~ /^(tautulli|sonarr|radarr)_/)
-  |> filter(fn: (r) => r["service"] == "sonarr" or r["service"] == "radarr" or r["service"] == "tautulli")
+  |> filter(fn: (r) => r["_measurement"] =~ /^(tautulli|sonarr|radarr|qbittorrent|gluetun)_/)
+  |> filter(fn: (r) => r["service"] == "sonarr" or r["service"] == "radarr" or r["service"] == "tautulli" or r["service"] == "qbittorrent" or r["service"] == "gluetun")
 ```
 
 ## Health check

@@ -26,4 +26,8 @@ def settings() -> Settings:
         sonarr_api_key="sonarr-key",
         radarr_url="http://radarr:7878",
         radarr_api_key="radarr-key",
+        qbittorrent_url="http://qbittorrent:8080",
+        qbittorrent_username="qbit-user",
+        qbittorrent_password="qbit-pass",
+        gluetun_control_url="http://gluetun:8000",
     )
