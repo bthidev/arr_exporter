@@ -1,0 +1,16 @@
+{
+  "response": {
+    "result": "success",
+    "message": null,
+    "data": {
+      "stream_count": "2",
+      "stream_count_direct_play": "1",
+      "stream_count_direct_stream": "0",
+      "stream_count_transcode": "1",
+      "total_bandwidth": 5000,
+      "lan_bandwidth": 2000,
+      "wan_bandwidth": 3000,
+      "sessions": []
+    }
+  }
+}

@@ -1,0 +1,4 @@
+[
+  {"id": 1, "title": "Show A", "monitored": true, "statistics": {"episodeCount": 10, "episodeFileCount": 8}},
+  {"id": 2, "title": "Show B", "monitored": true, "statistics": {"episodeCount": 20, "episodeFileCount": 20}}
+]

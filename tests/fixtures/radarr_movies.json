@@ -1,0 +1,5 @@
+[
+  {"id": 1, "title": "Movie A", "monitored": true, "hasFile": true},
+  {"id": 2, "title": "Movie B", "monitored": true, "hasFile": false},
+  {"id": 3, "title": "Movie C", "monitored": false, "hasFile": false}
+]

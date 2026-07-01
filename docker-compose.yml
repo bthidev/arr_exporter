@@ -1,0 +1,24 @@
+# Assumes InfluxDB, Tautulli, Sonarr and Radarr are already running elsewhere.
+# Put this container on the same Docker network as those services, or make
+# sure the *_URL variables in .env resolve via an internal hostname (e.g. NPM).
+services:
+  arr_exporter:
+    image: ghcr.io/bthidev/arr_exporter:latest
+    # build: .   # uncomment to build locally instead of pulling the published image
+    container_name: arr_exporter
+    env_file: .env
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    # network_mode: "container:some_shared_network"  # alternative if not using a named network
+    # networks:
+    #   - arr_stack
+
+# networks:
+#   arr_stack:
+#     external: true
